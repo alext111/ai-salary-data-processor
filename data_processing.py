@@ -1,4 +1,3 @@
-
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
@@ -7,7 +6,7 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.base import BaseEstimator, TransformerMixin
 import matplotlib.pyplot as plt
 import seaborn as sns
-import streamlit as st
+import streamlit_app as st
 
 # Kaggle dataset for AI Job Market & Salary Analysis 2025
 # https://www.kaggle.com/datasets/bismasajjad/global-ai-job-market-and-salary-trends-2025/data
@@ -66,19 +65,3 @@ plt.title("Salary vs. Years of Experience")
 plt.xlabel("Years of Experience")
 plt.ylabel("Salary (USD)")
 plt.show()
-
-# Streamlit
-# Sidebar filters
-selected_location = st.sidebar.selectbox("Select Country", sorted(dataset['company_location'].unique()))
-selected_experience = st.sidebar.multiselect("Experience Level", dataset['experience_level'].unique())
-
-filtered = dataset[
-    (dataset['company_location'] == selected_location)
-]
-if selected_experience:
-    filtered = filtered[filtered['experience_level'].isin(selected_experience)]
-
-st.subheader("Salary Distribution (USD)")
-fig, ax = plt.subplots()
-sns.histplot(filtered['salary_usd'], bins=30, kde=True, ax=ax)
-st.pyplot(fig)
